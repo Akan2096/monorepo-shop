@@ -30,7 +30,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
-        run: chmod +x {{matrix.microservice}}/gradlew
+        run: chmod +x ${{ matrix.microservice }}/gradlew
 
       - name: Build microservice
         run: |
