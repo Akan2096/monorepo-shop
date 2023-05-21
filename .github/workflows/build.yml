@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -42,7 +42,7 @@ jobs:
             docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}:${{ github.sha }}    
   push:
     needs: build
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -65,7 +65,7 @@ jobs:
 
   deploy:
     needs: push
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
