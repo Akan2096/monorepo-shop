@@ -44,7 +44,7 @@ jobs:
           file: ./${{ matrix.microservice }}/Dockerfile
           push: true
           tags: |
-            docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}
+            docker.io/akan2096/rental-shop-${{ matrix.microservice }}
 #  push:
 #    needs: build
 #    runs-on: ubuntu-latest
