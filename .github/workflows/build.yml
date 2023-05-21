@@ -42,7 +42,7 @@ jobs:
         with:
           context: ./${{ matrix.microservice }}
           file: ./${{ matrix.microservice }}/Dockerfile
-          push: false
+          push: true
           tags: |
             docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}
 #  push:
