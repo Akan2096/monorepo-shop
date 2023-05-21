@@ -37,6 +37,12 @@ jobs:
           cd ${{ matrix.microservice }}
           ./gradlew build -x test
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
@@ -68,25 +74,25 @@ jobs:
 #          tags: |
 #            docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}:${{ github.sha }}
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        microservice:
-          - dvd
-          - laptop
-
-    steps:
-      - name: Set up Docker Compose
-        uses: docker/compose-action@v2
-        with:
-          compose-file: docker-compose.yml
-          environment: |
-            MICROSERVICE1_IMAGE= docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}:${{ github.sha }}
-      - name: Restart Docker Compose services
-        run: docker-compose up -d
+#  deploy:
+#    needs: build
+#    runs-on: ubuntu-latest
+#
+#    strategy:
+#      matrix:
+#        microservice:
+#          - dvd
+#          - laptop
+#
+#    steps:
+#      - name: Set up Docker Compose
+#        uses: docker/compose-action@v2
+#        with:
+#          compose-file: docker-compose.yml
+#          environment: |
+#            MICROSERVICE_IMAGE= docker.io/akan2096/rental-shop-${{ matrix.microservice }}
+#      - name: Restart Docker Compose services
+#        run: docker-compose up -d
 
             
 
