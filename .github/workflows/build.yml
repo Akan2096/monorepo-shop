@@ -44,32 +44,32 @@ jobs:
           file: ./${{ matrix.microservice }}/Dockerfile
           push: false
           tags: |
-            docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}:${{ github.sha }}    
-  push:
-    needs: build
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        microservice:
-          - dvd
-          - laptop
-
-    steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./${{ matrix.microservice }}
-          file: ./${{ matrix.microservice }}/Dockerfile
-          push: true
-          tags: |
-            docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}:${{ github.sha }}  
+            docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}
+#  push:
+#    needs: build
+#    runs-on: ubuntu-latest
+#
+#    strategy:
+#      matrix:
+#        microservice:
+#          - dvd
+#          - laptop
+#
+#    steps:
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
+#
+#      - name: Push Docker image
+#        uses: docker/build-push-action@v2
+#        with:
+#          context: ./${{ matrix.microservice }}
+#          file: ./${{ matrix.microservice }}/Dockerfile
+#          push: true
+#          tags: |
+#            docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}:${{ github.sha }}
 
   deploy:
-    needs: push
+    needs: build
     runs-on: ubuntu-latest
 
     strategy:
