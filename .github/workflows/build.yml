@@ -74,25 +74,34 @@ jobs:
 #          tags: |
 #            docker.io/akan2096/your-repository/rental-shop-${{ matrix.microservice }}:${{ github.sha }}
 
-#  deploy:
-#    needs: build
-#    runs-on: ubuntu-latest
-#
-#    strategy:
-#      matrix:
-#        microservice:
-#          - dvd
-#          - laptop
-#
-#    steps:
-#      - name: Set up Docker Compose
-#        uses: docker/compose-action@v2
-#        with:
-#          compose-file: docker-compose.yml
-#          environment: |
-#            MICROSERVICE_IMAGE= docker.io/akan2096/rental-shop-${{ matrix.microservice }}
-#      - name: Restart Docker Compose services
-#        run: docker-compose up -d
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        microservice:
+          - dvd
+          - laptop
+
+    steps:
+      - name: Set up Docker Compose
+        uses: docker/compose-action@v2
+        with:
+          compose-file: docker-compose.yml
+          environment: |
+            MICROSERVICE_IMAGE= docker.io/akan2096/rental-shop-${{ matrix.microservice }}
+      - name: Restart Docker Compose services
+        run: docker-compose up -d
+      - name: Test microservice with curl
+        run: |
+          if [[ "${{ matrix.microservice }}" == "dvd" ]]; then
+            curl http://localhost:3000
+          elif [[ "${{ matrix.microservice }}" == "laptop" ]]; then
+            curl http://localhost:3001
+          fi
+      - name: Remove Docker container
+        run: docker-compose down
 
             
 
